@@ -6,6 +6,7 @@ import TodoFilter from './components/todo/TodoFilter';
 import ClearCompletedBtn from './components/todo/ClearCompletedBtn';
 import { useCallback, useEffect, useState } from 'react';
 
+const url = process.env.REACT_APP_BASE_URL;
 function App() {
   const [todos, setTodos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +15,7 @@ function App() {
   // get todos
   useEffect(() => {
     setIsLoading(true);
-    fetch("http://localhost:3030/todos").then(res => {
+    fetch(`${url}/todos`).then(res => {
       if (!res.ok) {
         throw new Error("Network response was not ok");
       }
@@ -44,7 +45,7 @@ function App() {
 
   // add todo
   let addTodo = (todo) => {
-    fetch("http://localhost:3030/todos", {
+    fetch(`${url}/todos`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,7 +58,7 @@ function App() {
 
   // delete todo
   let deleteTodo = (todoId) => {
-    fetch(`http://localhost:3030/todos/${todoId}`, {
+    fetch(`${url}/todos/${todoId}`, {
       method: "DELETE"
     });
 
@@ -66,7 +67,7 @@ function App() {
 
   // update todo
   let updateTodo = (todo) => {
-    fetch(`http://localhost:3030/todos/${todo.id}`, {
+    fetch(`${url}/todos/${todo.id}`, {
       method: 'PATCH',
       headers: {
         "Content-Type": "application/json",
